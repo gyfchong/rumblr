@@ -1,0 +1,19 @@
+name: "Deployment"
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  update-baseline:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
+      - name: Production
+        run: npx ampx pipeline-deploy --branch main --app-id ${{ secrets.APP_ID }}

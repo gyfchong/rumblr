@@ -8,7 +8,7 @@
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
-    "type-check": "vue-tsc --build --force"
+    "lint:ts": "vue-tsc --build --force"
   },
   "dependencies": {
     "aws-amplify": "^6.2.0",
