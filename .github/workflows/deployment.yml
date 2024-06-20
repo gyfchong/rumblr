@@ -6,7 +6,7 @@ on:
       - "main"
 
 jobs:
-  update-baseline:
+  deploy:
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -16,4 +16,4 @@ jobs:
           fetch-depth: 0
       - uses: ./.github/actions/setup
       - name: Production
-        run: npx ampx pipeline-deploy --branch main --app-id ${{ secrets.APP_ID }}
+        run: curl -X POST -d {} "${{ secrets.DEPLOY_WEBHOOK_URL}}" -H "Content-Type:application/json"
