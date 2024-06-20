@@ -7,11 +7,12 @@
     "node": "v18.18.2"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
-    "preview": "vite preview",
-    "build-only": "vite build",
-    "lint:ts": "vue-tsc --build --force"
+    "dev:app": "vite",
+    "build:app": "run-p type-check \"build-only {@}\" --",
+    "preview:app": "vite preview",
+    "build-only:app": "vite build",
+    "lint:ts": "vue-tsc --build --force",
+    "build": "turbo run build"
   },
   "dependencies": {
     "aws-amplify": "^6.3.7",
@@ -30,6 +31,7 @@
     "esbuild": "^0.21.5",
     "npm-run-all2": "^6.2.0",
     "tsx": "^4.15.6",
+    "turbo": "^2.0.4",
     "typescript": "^5.4.5",
     "vite": "^5.3.1",
     "vue-tsc": "^2.0.21"
