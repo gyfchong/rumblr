@@ -1,13 +1,9 @@
 #!/usr/bin/env node
 import { initStack } from "./init-stack";
 import "source-map-support/register";
-import { BackendTripPostStack } from "../lib/backend-stack";
+
+import { AppSyncBasedServiceProps } from "../lib/backend-stack";
 
 const { app, stackNameWithEnv, stackProps, context } = initStack();
 
-const travelStack = new BackendTripPostStack(
-  app,
-  stackNameWithEnv,
-  stackProps,
-  context
-);
+new AppSyncBasedServiceProps(app, stackNameWithEnv, stackProps);

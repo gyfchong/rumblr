@@ -1,38 +1,42 @@
-import { CDKContext } from "./../cdk.context.d";
 import * as cdk from "aws-cdk-lib";
-import {
-  AmplifyGraphqlApi,
-  AmplifyGraphqlDefinition,
-} from "@aws-amplify/graphql-api-construct";
 import { Construct } from "constructs";
-import * as path from "path";
+import { join } from "path";
 import { UserPool, UserPoolClient } from "aws-cdk-lib/aws-cognito";
+import * as lambda from "aws-cdk-lib/aws-lambda-nodejs";
+import { Tracing } from "aws-cdk-lib/aws-lambda";
+import * as appsync from "aws-cdk-lib/aws-appsync";
 
-export class BackendTripPostStack extends cdk.Stack {
-  constructor(
-    scope: Construct,
-    id: string,
-    props: cdk.StackProps,
-    context: CDKContext
-  ) {
-    super(scope, id, props);
+export class AppSyncBasedServiceProps extends cdk.Stack {
+  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+    super(scope, id);
 
     const userPool = new UserPool(this, "MyNewUserPool");
     new UserPoolClient(this, "MyNewUserPoolClient", { userPool: userPool });
 
-    const amplifyApi = new AmplifyGraphqlApi(this, "MyNewApi", {
-      definition: AmplifyGraphqlDefinition.fromFiles(
-        path.join(__dirname, "schema.graphql")
-      ),
-      authorizationModes: {
-        defaultAuthorizationMode: "API_KEY",
-        apiKeyConfig: {
-          expires: cdk.Duration.days(30),
-        },
-        userPoolConfig: {
-          userPool: userPool,
+    const schema = appsync.SchemaFile.fromAsset(
+      join(__dirname, "schema.graphql")
+    );
+
+    new appsync.GraphqlApi(this, "MyNewApi", {
+      name: "demo",
+      definition: appsync.Definition.fromSchema(schema),
+      authorizationConfig: {
+        defaultAuthorization: {
+          authorizationType: appsync.AuthorizationType.API_KEY,
+          apiKeyConfig: {
+            expires: cdk.Expiration.after(cdk.Duration.days(364)),
+          },
         },
       },
+      xrayEnabled: true,
+    });
+
+    new lambda.NodejsFunction(this, "lambdaResolver", {
+      entry: join(__dirname, `${props?.stackName}-resolver.ts`),
+      environment: {
+        SCHEMA: schema.definition.replace("__typename: String!", ""), // We need to remove __typename from the definition to stay compliant with expected Apollo SDL format
+      },
+      tracing: Tracing.ACTIVE,
     });
   }
 }

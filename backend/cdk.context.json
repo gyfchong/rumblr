@@ -6,8 +6,8 @@
   },
   "environments": [
     {
-      "environment": "develop",
-      "branchName": "develop"
+      "environment": "production",
+      "branchName": "main"
     }
   ]
 }
