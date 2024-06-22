@@ -1,4 +1,6 @@
-type Blog @model @auth(rules: [{ allow: public }]) {
+type Blog
+  @model
+  @auth(rules: [{ allow: public, operations: [read] }, { allow: owner }]) {
   title: String
   content: String
   authors: [String]

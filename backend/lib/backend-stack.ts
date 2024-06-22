@@ -6,6 +6,7 @@ import {
 } from "@aws-amplify/graphql-api-construct";
 import { Construct } from "constructs";
 import * as path from "path";
+import { UserPool, UserPoolClient } from "aws-cdk-lib/aws-cognito";
 
 export class BackendTripPostStack extends cdk.Stack {
   constructor(
@@ -15,6 +16,10 @@ export class BackendTripPostStack extends cdk.Stack {
     context: CDKContext
   ) {
     super(scope, id, props);
+
+    const userPool = new UserPool(this, "MyNewUserPool");
+    new UserPoolClient(this, "MyNewUserPoolClient", { userPool: userPool });
+
     const amplifyApi = new AmplifyGraphqlApi(this, "MyNewApi", {
       definition: AmplifyGraphqlDefinition.fromFiles(
         path.join(__dirname, "schema.graphql")
@@ -23,6 +28,9 @@ export class BackendTripPostStack extends cdk.Stack {
         defaultAuthorizationMode: "API_KEY",
         apiKeyConfig: {
           expires: cdk.Duration.days(30),
+        },
+        userPoolConfig: {
+          userPool: userPool,
         },
       },
     });
