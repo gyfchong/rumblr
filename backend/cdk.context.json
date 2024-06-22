@@ -1,0 +1,13 @@
+{
+  "globals": {
+    "appName": "travel-viewer-app",
+    "region": "ap-southeast-2",
+    "appDescription": "A stack for a Travel pic viewer"
+  },
+  "environments": [
+    {
+      "environment": "develop",
+      "branchName": "develop"
+    }
+  ]
+}

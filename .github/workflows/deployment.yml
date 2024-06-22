@@ -1,19 +1,27 @@
-# name: "Deployment"
+name: "Deployment"
 
-# on:
-#   push:
-#     branches:
-#       - "main"
+on:
+  push:
+    branches:
+      - "main"
 
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
-#     environment: production
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v4
-#         with:
-#           fetch-depth: 0
-#       - uses: ./.github/actions/setup
-#       - name: Production
-#         run: curl -X POST -d {} "${{ secrets.DEPLOY_WEBHOOK_URL}}" -H "Content-Type:application/json"
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ap-southeast-2
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_APP_ID }}:role/github-role
+          role-session-name: deployment-session
+      - name: cdk synth
+        run: npx --yes cdk synth
+      - name: cdk deploy
+        run: npx --yes cdk deploy --require-approval never

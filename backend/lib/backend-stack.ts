@@ -1,16 +1,30 @@
-import * as cdk from 'aws-cdk-lib';
-import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import { CDKContext } from "./../cdk.context.d";
+import * as cdk from "aws-cdk-lib";
+import {
+  AmplifyGraphqlApi,
+  AmplifyGraphqlDefinition,
+} from "@aws-amplify/graphql-api-construct";
+import { Construct } from "constructs";
+import * as path from "path";
 
-export class BackendStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+export class BackendTripPostStack extends cdk.Stack {
+  constructor(
+    scope: Construct,
+    id: string,
+    props: cdk.StackProps,
+    context: CDKContext
+  ) {
     super(scope, id, props);
-
-    // The code that defines your stack goes here
-
-    // example resource
-    // const queue = new sqs.Queue(this, 'BackendQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
+    const amplifyApi = new AmplifyGraphqlApi(this, "MyNewApi", {
+      definition: AmplifyGraphqlDefinition.fromFiles(
+        path.join(__dirname, "schema.graphql")
+      ),
+      authorizationModes: {
+        defaultAuthorizationMode: "API_KEY",
+        apiKeyConfig: {
+          expires: cdk.Duration.days(30),
+        },
+      },
+    });
   }
 }
