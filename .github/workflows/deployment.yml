@@ -25,7 +25,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_APP_ID }}:role/GithubActionStack-Role-i2hyMd6hKGdY
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_APP_ID }}:role/DeployGHAction-Role-7am48lScwdoB
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.AWS_REGION }}
       - name: cdk synth
