@@ -19,7 +19,6 @@ on:
 
 jobs:
   typescript:
-    if: github.head_ref != 'changeset-release/main'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
