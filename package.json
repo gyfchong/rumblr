@@ -16,25 +16,25 @@
   },
   "dependencies": {
     "aws-amplify": "^6.3.7",
-    "vue": "^3.4.29"
+    "vue": "^3.4.30"
   },
   "devDependencies": {
     "@aws-amplify/backend": "^1.0.3",
     "@aws-amplify/backend-cli": "^1.0.4",
     "@tsconfig/node20": "^20.1.4",
-    "@types/node": "^20.14.6",
+    "@types/node": "^20.14.8",
     "@vitejs/plugin-vue": "^5.0.5",
     "@vue/tsconfig": "^0.5.1",
-    "aws-cdk": "^2.146.0",
-    "aws-cdk-lib": "^2.146.0",
+    "aws-cdk": "^2.147.0",
+    "aws-cdk-lib": "^2.147.0",
     "constructs": "^10.3.0",
     "esbuild": "^0.21.5",
     "npm-run-all2": "^6.2.0",
-    "tsx": "^4.15.6",
+    "tsx": "^4.15.7",
     "turbo": "^2.0.4",
-    "typescript": "^5.4.5",
+    "typescript": "^5.5.2",
     "vite": "^5.3.1",
-    "vue-tsc": "^2.0.21"
+    "vue-tsc": "^2.0.22"
   },
   "packageManager": "pnpm@9.4.0+sha512.f549b8a52c9d2b8536762f99c0722205efc5af913e77835dbccc3b0b0b2ca9e7dc8022b78062c17291c48e88749c70ce88eb5a74f1fa8c4bf5e18bb46c8bd83a"
 }

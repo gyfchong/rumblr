@@ -1,0 +1,41 @@
+type Post @key(fields: "id") {
+  id: ID!
+  author: Member
+  content: String
+}
+
+type Member @key(fields: "email") {
+  email: ID!
+  posts: [Post]
+}
+
+type Query {
+  _service: _Service!
+  post(id: ID!): Post
+  member(id: ID!): Member
+}
+
+type _Service {
+  sdl: String
+}
+
+union _Entity = Member | Post
+
+# https://aws.amazon.com/blogs/mobile/federation-appsync-subgraph/
+# Extending Entity
+# Now let’s imagine a new independent service called Reviews is created and hosted in a
+# separate GraphQL API to manage Product’s reviews with the following subgraph:
+# type Product @key(fields: "id") @extends {
+#     id: ID! @external
+#     reviews: [Review]
+# }
+
+# """
+# This is an Entity, docs:https://www.apollographql.com/docs/federation/entities/
+# You will need to define a __resolveReference resolver for the type you define, docs: https://www.apollographql.com/docs/federation/entities/#resolving
+# """
+# type Review @key(fields: "id") {
+#     id: ID!
+#     rating: Float
+#     content: String
+# }
