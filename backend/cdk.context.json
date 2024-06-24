@@ -1,8 +1,8 @@
 {
   "globals": {
-    "appName": "travel-viewer-app",
+    "appName": "rumblr-app",
     "region": "ap-southeast-2",
-    "appDescription": "A stack for a Travel pic viewer"
+    "appDescription": "A stack for a Social Network"
   },
   "environments": [
     {

@@ -1,35 +1,15 @@
-type Product {
+type Post {
   id: ID!
-  sku: String
-  package: String
-  variation: ProductVariation
-  dimensions: ProductDimension
-  createdBy: User
+  author: Member
+  content: String
 }
 
-type ProductDimension {
-  size: String
-  weight: Float
-}
-
-type ProductVariation {
-  id: ID!
-}
-
-input ProductVariationInput {
-  id: ID!
-}
-
-type User {
+type Member {
   email: ID!
-  totalProductsCreated: Int
+  posts: [Post]
 }
 
 type Query {
-  _service: _Service!
-  product(id: ID!): Product
-}
-
-type _Service {
-  sdl: String
+  post(id: ID!): Post
+  member(id: ID!): Member
 }
