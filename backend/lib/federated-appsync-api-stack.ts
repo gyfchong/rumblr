@@ -31,7 +31,7 @@ export class FederatedAppsyncApiDemoStack extends cdk.Stack {
         //   url: reviewsService.graphQLApiEndpoint,
         // },
         {
-          name: "Product",
+          name: "Post",
           url: postsService.graphQLApiEndpoint,
         },
       ],
