@@ -7,6 +7,8 @@
     "lint:ts": {
       "cache": false
     },
+    "dev": { "cache": false },
+    "lint": {},
     "test": {}
   }
 }
