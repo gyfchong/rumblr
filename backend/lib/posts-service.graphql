@@ -1,6 +1,5 @@
 type Post @key(fields: "id") {
   id: ID!
-  author: Member
   content: String
 }
 
