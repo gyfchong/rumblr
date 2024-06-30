@@ -18,3 +18,5 @@ jobs:
           aws-region: ap-southeast-2
       - name: Deploy backend
         run: cd backend && cdk deploy --all --require-approval never
+      - name: Deploy vue app
+        run: cd apps/vue-project && aws s3 sync dist/ s3://rumblr-vue-app --delete
