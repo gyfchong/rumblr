@@ -1,4 +1,4 @@
-name: Deploy to production
+name: Deployment
 
 on:
   push:
@@ -6,10 +6,9 @@ on:
       - main
 
 jobs:
-  deploy:
+  production:
     runs-on: ubuntu-latest
     environment: production
-
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
