@@ -1,12 +1,11 @@
 name: Deployment
 
-on:
-  push:
-    branches:
-      - main
+on: push
 
 jobs:
   production:
+    # opens the possibility of multiple environments depending on the branch
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: production
     steps:
