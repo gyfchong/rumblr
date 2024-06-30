@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [vue(), vueDevTools()],
   build: {
     rollupOptions: {
-      external: ['@vue/apollo-composable', '@apollo/client/core']
+      external: ['@vue/apollo-composable', '@apollo/client/core', 'graphql-tag']
     }
   },
   resolve: {
