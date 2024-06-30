@@ -4,7 +4,7 @@ import { Construct } from "constructs";
 import { ApolloFederationGateway } from "./apollo-federation-gateway";
 import { AppSyncBasedService } from "./appsync-based-service";
 
-export class FederatedAppsyncApiDemoStack extends cdk.Stack {
+export class FederatedAppsyncApiStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
