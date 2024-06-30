@@ -50,7 +50,7 @@ runs:
 
     - name: Install AWS CDK
       shell: bash
-      run: pnpm install aws-cdk
+      run: npm install -g aws-cdk
 
     # - name: Install Playwright
     #   shell: bash
