@@ -1,4 +1,4 @@
-name: Deploy to AWS
+name: Deploy to production
 
 on:
   push:
@@ -13,5 +13,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-      - name: Deploy with CDK
+      - name: Deploy backend
         run: cdk deploy --all --require-approval never
