@@ -40,7 +40,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-      - run: pnpm lint:format
+      - run: pnpm lint:prettier
 
   stylelint:
     runs-on: ubuntu-latest

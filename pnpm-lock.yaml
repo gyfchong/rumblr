@@ -175,6 +175,9 @@ importers:
       esbuild:
         specifier: ^0.21.5
         version: 0.21.5
+      globals:
+        specifier: ^15.6.0
+        version: 15.6.0
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.14.8)(ts-node@10.9.2(@types/node@20.14.8)(typescript@5.5.2))

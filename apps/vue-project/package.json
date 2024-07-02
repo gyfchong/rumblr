@@ -12,7 +12,8 @@
     "lint:ts": "vue-tsc --build --force",
     "lint:js": "eslint",
     "lint:styles": "stylelint src/**/*.vue src/**/*.css",
-    "lint:fix": "eslint --fix src/ && stylelint --fix src/**/*.vue src/**/*.css && prettier --write src/"
+    "lint:prettier": "prettier",
+    "lint:fix": "pnpm lint:js --fix && pnpm lint:styles --fix && pnpm lint:prettier --write src/"
   },
   "dependencies": {
     "@apollo/client": "^3.10.8",

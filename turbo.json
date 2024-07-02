@@ -21,7 +21,6 @@
       "cache": false
     },
     "lint:fix": {
-      "dependsOn": ["lint"],
       "cache": false
     },
     "test": {
