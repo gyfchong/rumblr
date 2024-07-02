@@ -4,11 +4,32 @@
     "build": {
       "dependsOn": ["^build"]
     },
+    "dev": {
+      "cache": false
+    },
+    "lint": {
+      "dependsOn": ["lint:ts", "lint:js", "lint:styles"],
+      "cache": false
+    },
     "lint:ts": {
       "cache": false
     },
-    "dev": { "cache": false },
-    "lint": {},
-    "test": {}
+    "lint:js": {
+      "cache": false
+    },
+    "lint:styles": {
+      "cache": false
+    },
+    "lint:fix": {
+      "dependsOn": ["lint"],
+      "cache": false
+    },
+    "test": {
+      "dependsOn": ["build"]
+    },
+    "test:ci": {
+      "dependsOn": ["build"],
+      "cache": false
+    }
   }
 }

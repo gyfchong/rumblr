@@ -9,11 +9,10 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "test": "turbo run test",
+    "test:ci": "turbo run test:ci",
     "lint": "turbo run lint",
-    "lint:js": "pnpm eslint -c .eslintrc.mjs",
-    "lint:ts": "pnpm turbo lint:ts",
-    "lint:format": "pnpm prettier --check '**/*'",
-    "lint:fix": "pnpm lint --fix && pnpm lint:format --write"
+    "lint:fix": "turbo run lint:fix"
   },
   "devDependencies": {
     "@eslint/js": "^9.6.0",
