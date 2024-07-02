@@ -12,6 +12,9 @@
     "test": "turbo run test",
     "test:ci": "turbo run test:ci",
     "lint": "turbo run lint",
+    "lint:ts": "turbo run lint:ts",
+    "lint:js": "turbo run lint:js",
+    "lint:styles": "turbo run lint:styles",
     "lint:fix": "turbo run lint:fix"
   },
   "devDependencies": {
