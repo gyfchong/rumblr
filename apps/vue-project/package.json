@@ -12,7 +12,7 @@
     "lint:ts": "vue-tsc --build --force",
     "lint:js": "eslint",
     "lint:styles": "stylelint src/**/*.vue src/**/*.css",
-    "lint:prettier": "prettier",
+    "lint:prettier": "prettier --check src/",
     "lint:fix": "pnpm lint:js --fix && pnpm lint:styles --fix && pnpm lint:prettier --write src/"
   },
   "dependencies": {

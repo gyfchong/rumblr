@@ -20,6 +20,9 @@
     "lint:styles": {
       "cache": false
     },
+    "lint:prettier": {
+      "cache": false
+    },
     "lint:fix": {
       "cache": false
     },
