@@ -6,7 +6,7 @@ import * as apigateway from "aws-cdk-lib/aws-apigateway";
 import { join } from "path";
 
 export interface ApolloBasedServiceProps {
-  readonly serviceName: string;
+  readonly serviceName: number;
 }
 
 export class ApolloBasedService extends Construct {

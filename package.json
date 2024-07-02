@@ -8,12 +8,22 @@
   },
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev"
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "lint:js": "pnpm eslint -c .eslintrc.mjs",
+    "lint:ts": "pnpm turbo lint:ts",
+    "lint:format": "pnpm prettier --check '**/*'",
+    "lint:fix": "pnpm lint --fix && pnpm lint:format --write"
   },
-  "dependencies": {},
   "devDependencies": {
-    "turbo": "^2.0.4",
-    "typescript": "^5.5.2"
+    "@eslint/js": "^9.6.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-sort-imports-es6-autofix": "^0.6.0",
+    "eslint-plugin-storybook": "^0.8.0",
+    "turbo": "^2.0.6",
+    "typescript": "^5.5.2",
+    "typescript-eslint": "^7.14.1"
   },
   "packageManager": "pnpm@9.4.0+sha512.f549b8a52c9d2b8536762f99c0722205efc5af913e77835dbccc3b0b0b2ca9e7dc8022b78062c17291c48e88749c70ce88eb5a74f1fa8c4bf5e18bb46c8bd83a"
 }

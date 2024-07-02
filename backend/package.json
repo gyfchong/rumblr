@@ -1,11 +1,14 @@
 {
   "name": "backend",
   "version": "0.1.0",
+  "type": "module",
   "bin": {
     "backend": "dist/bin/backend.js"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc --project tsconfig.dist.json",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.140",

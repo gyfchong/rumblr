@@ -1,7 +1,7 @@
 <script setup lang="ts">
-defineProps<{
-  msg: string
-}>()
+defineProps({
+  msg: String
+})
 </script>
 
 <template>
