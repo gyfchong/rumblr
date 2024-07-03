@@ -1,7 +1,6 @@
 {
   "name": "backend",
   "version": "0.1.0",
-  "type": "module",
   "bin": {
     "backend": "dist/bin/backend.js"
   },
