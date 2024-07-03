@@ -1,15 +1,18 @@
-import { ApolloServer } from "apollo-server-lambda";
-import { ApolloGateway, RemoteGraphQLDataSource } from "@apollo/gateway";
-import * as AWSXray from "aws-xray-sdk-core";
+import { ApolloServer } from "apollo-server-lambda"
+import { ApolloGateway, RemoteGraphQLDataSource } from "@apollo/gateway"
+import * as AWSXray from "aws-xray-sdk-core"
+import * as https from "https"
+import * as http from "http"
 
-AWSXray.captureHTTPsGlobal(require("https"), true);
-AWSXray.captureHTTPsGlobal(require("http"), true);
+AWSXray.captureHTTPsGlobal(https, true)
+AWSXray.captureHTTPsGlobal(http, true)
 
 class AuthenticatedDataSource extends RemoteGraphQLDataSource {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   willSendRequest({ request }: any) {
     // Pass the user's id from the context to each subgraph
     // as a header called `user-id`
-    request.http.headers.set("x-api-key", process.env.API_KEY);
+    request.http.headers.set("x-api-key", process.env.API_KEY)
   }
 }
 
@@ -17,16 +20,16 @@ class AuthenticatedDataSource extends RemoteGraphQLDataSource {
 // the supergraph schema
 const gateway = new ApolloGateway({
   serviceList: JSON.parse(process.env.SERVICE_LIST!),
-  buildService({ name, url }) {
-    return new AuthenticatedDataSource({ url });
+  buildService({ url }) {
+    return new AuthenticatedDataSource({ url })
   },
-});
+})
 
 // Pass the ApolloGateway to the ApolloServer constructor
 const server = new ApolloServer({
   gateway,
   debug: true,
   introspection: true,
-});
+})
 
-exports.handler = server.createHandler();
+exports.handler = server.createHandler()

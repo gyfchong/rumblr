@@ -1,6 +1,9 @@
 name: Deployment
 
-on: push
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   production:
@@ -11,14 +14,31 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
+
+      - name: Set up AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-southeast-2
+
+      - name: Install AWS CLI
+        shell: bash
+        run: |
+          curl "https://d1vvhvl2y92vvt.cloudfront.net/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install --update
+
+      - name: Install AWS CDK
+        shell: bash
+        run: npm install -g aws-cdk
+
       - name: Build
         run: pnpm build
+
       - name: Deploy backend
         # This could be optimised by checking against the main branch and only deploying if the backend has changed
         run: cd backend && cdk deploy --all --require-approval never
+
       - name: Deploy vue app
         run: cd apps/vue-project && aws s3 sync dist/ s3://rumblr-vue-app --delete
