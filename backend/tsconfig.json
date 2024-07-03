@@ -2,11 +2,11 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "target": "ES2020",
-    "module": "commonjs",
+    "module": "esnext",
     "lib": ["es2020", "dom"],
     "moduleResolution": "node",
     "noEmit": true
   },
   "include": ["lib", "bin"],
-  "files": ["cdk.context.d.ts"],
+  "files": ["cdk.context.d.ts"]
 }

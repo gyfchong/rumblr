@@ -6,7 +6,11 @@ import * as dynamodb from "aws-cdk-lib/aws-dynamodb"
 import { Tracing, Runtime } from "aws-cdk-lib/aws-lambda"
 import * as s3 from "aws-cdk-lib/aws-s3"
 
-import { join } from "path"
+import { join, dirname } from "path"
+import { fileURLToPath } from "url"
+
+const __filename = fileURLToPath(import.meta.url) // get the resolved path to the file
+const __dirname = dirname(__filename) // get the name of the directory
 
 export interface AppSyncBasedServiceProps {
   readonly serviceName: string

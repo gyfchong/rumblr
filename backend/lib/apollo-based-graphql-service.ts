@@ -1,18 +1,20 @@
-import * as cdk from "aws-cdk-lib";
-import { Construct } from "constructs";
-import * as lambda from "aws-cdk-lib/aws-lambda-nodejs";
-import { Tracing, Runtime } from "aws-cdk-lib/aws-lambda";
-import * as apigateway from "aws-cdk-lib/aws-apigateway";
-import { join } from "path";
+import * as cdk from "aws-cdk-lib"
+import { Construct } from "constructs"
+import * as lambda from "aws-cdk-lib/aws-lambda-nodejs"
+import { Tracing, Runtime } from "aws-cdk-lib/aws-lambda"
+import * as apigateway from "aws-cdk-lib/aws-apigateway"
+import { join, dirname } from "path"
+import { fileURLToPath } from "url"
 
+const __filename = fileURLToPath(import.meta.url) // get the resolved path to the file
+const __dirname = dirname(__filename) // get the name of the directory
 export interface ApolloBasedServiceProps {
-  readonly serviceName: number;
+  readonly serviceName: number
 }
-
 export class ApolloBasedService extends Construct {
-  readonly graphQLApiEndpoint: string;
+  readonly graphQLApiEndpoint: string
   constructor(scope: Construct, id: string, props: ApolloBasedServiceProps) {
-    super(scope, id);
+    super(scope, id)
 
     //  Service hosted by an Apollo server running on AWS Lambda
     const apolloServer = new lambda.NodejsFunction(this, `ApolloServer`, {
@@ -20,7 +22,7 @@ export class ApolloBasedService extends Construct {
       timeout: cdk.Duration.seconds(30),
       tracing: Tracing.ACTIVE,
       runtime: Runtime.NODEJS_20_X,
-    });
+    })
 
     const grapqhQLApi = new apigateway.RestApi(this, `Api`, {
       restApiName: `${props.serviceName} graphql endpoint`,
@@ -32,14 +34,14 @@ export class ApolloBasedService extends Construct {
       deployOptions: {
         tracingEnabled: true,
       },
-    });
+    })
 
     const graphqlPostIntegration = new apigateway.LambdaIntegration(
       apolloServer
-    );
+    )
 
-    grapqhQLApi.root.addMethod("POST", graphqlPostIntegration);
+    grapqhQLApi.root.addMethod("POST", graphqlPostIntegration)
 
-    this.graphQLApiEndpoint = grapqhQLApi.url;
+    this.graphQLApiEndpoint = grapqhQLApi.url
   }
 }
