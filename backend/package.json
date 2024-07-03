@@ -6,7 +6,8 @@
     "backend": "dist/bin/backend.js"
   },
   "scripts": {
-    "build": "tsc --project tsconfig.dist.json",
+    "build": "tsc --project tsconfig.dist.json && pnpm copy:schema",
+    "copy:schema": "find lib/ -type f -name '*.graphql' -exec cp '{}' dist/lib ';'",
     "lint:ts": "tsc --noEmit",
     "lint:js": "eslint",
     "lint:fix": "eslint --fix"
