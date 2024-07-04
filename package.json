@@ -16,7 +16,8 @@
     "lint:js": "turbo run lint:js",
     "lint:styles": "turbo run lint:styles",
     "lint:prettier": "turbo run lint:prettier",
-    "lint:fix": "turbo run lint:fix"
+    "lint:fix": "turbo run lint:fix",
+    "deploy:ci": "turbo run deploy:ci"
   },
   "devDependencies": {
     "@eslint/js": "^9.6.0",

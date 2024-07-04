@@ -1,13 +1,13 @@
 {
   "name": "backend",
   "version": "0.1.0",
-  "type": "module",
   "bin": {
     "backend": "dist/bin/backend.js"
   },
   "scripts": {
     "build": "tsc --project tsconfig.dist.json && pnpm copy:schema",
     "copy:schema": "find lib/ -type f -name '*.graphql' -exec cp '{}' dist/lib ';'",
+    "deploy:ci": "pnpm cdk deploy --all --require-approval never",
     "lint:ts": "tsc --noEmit",
     "lint:js": "eslint",
     "lint:fix": "eslint --fix"
@@ -16,19 +16,17 @@
     "@types/aws-lambda": "^8.10.140",
     "@types/git-branch": "^2.0.5",
     "@types/jest": "^29.5.12",
-    "@types/node": "20.14.8",
-    "aws-cdk": "2.147.0",
-    "esbuild": "^0.21.5",
-    "globals": "^15.6.0",
-    "tsx": "^4.16.1",
-    "typescript": "~5.5.2",
+    "@types/node": "20.14.9",
+    "esbuild": "^0.23.0",
+    "globals": "^15.8.0",
+    "tsx": "^4.16.2",
+    "typescript": "~5.5.3",
     "vitest": "^1.6.0"
   },
   "dependencies": {
-    "@apollo/gateway": "^2.8.1",
-    "@aws-amplify/graphql-api-construct": "^1.9.5",
+    "@apollo/gateway": "^2.8.2",
     "apollo-server-lambda": "^3.13.0",
-    "aws-cdk-lib": "2.147.0",
+    "aws-cdk-lib": "^2.147.3",
     "aws-lambda": "^1.0.7",
     "aws-xray-sdk-core": "^3.9.0",
     "constructs": "^10.3.0",

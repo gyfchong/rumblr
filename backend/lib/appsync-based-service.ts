@@ -55,7 +55,7 @@ export class AppSyncBasedService extends Construct {
             .definition.replace("__typename: String!", ""),
         },
         tracing: Tracing.ACTIVE,
-        runtime: Runtime.NODEJS_20_X,
+        runtime: Runtime.NODEJS_LATEST,
       }
     )
 

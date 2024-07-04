@@ -21,7 +21,7 @@ export class ApolloBasedService extends Construct {
       entry: join(__dirname, `${props.serviceName}.Server.ts`),
       timeout: cdk.Duration.seconds(30),
       tracing: Tracing.ACTIVE,
-      runtime: Runtime.NODEJS_20_X,
+      runtime: Runtime.NODEJS_LATEST,
     })
 
     const grapqhQLApi = new apigateway.RestApi(this, `Api`, {

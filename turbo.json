@@ -32,6 +32,10 @@
     "test:ci": {
       "dependsOn": ["build"],
       "cache": false
+    },
+    "deploy:ci": {
+      "dependsOn": ["build"],
+      "cache": false
     }
   }
 }

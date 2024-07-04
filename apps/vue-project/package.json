@@ -13,10 +13,12 @@
     "lint:js": "eslint",
     "lint:styles": "stylelint src/**/*.vue src/**/*.css",
     "lint:prettier": "prettier --check src/",
-    "lint:fix": "pnpm lint:js --fix && pnpm lint:styles --fix && pnpm lint:prettier --write src/"
+    "lint:fix": "pnpm lint:js --fix && pnpm lint:styles --fix && pnpm lint:prettier --write src/",
+    "deploy:ci": "pnpm aws s3 sync dist/ s3://rumblr-vue-app --delete"
   },
   "dependencies": {
     "@apollo/client": "^3.10.8",
+    "@aws-sdk/client-s3": "^3.609.0",
     "@vue/apollo-composable": "^4.0.2",
     "graphql-tag": "^2.12.6",
     "vue": "^3.4.29",

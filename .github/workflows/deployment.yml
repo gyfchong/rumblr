@@ -36,9 +36,8 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Deploy backend
-        # This could be optimised by checking against the main branch and only deploying if the backend has changed
-        run: cd backend && cdk deploy --all --require-approval never
+      - name: Deploy GraphQL API
+        run: pnpm -F backend deploy:ci
 
-      - name: Deploy vue app
-        run: cd apps/vue-project && aws s3 sync dist/ s3://rumblr-vue-app --delete
+      - name: Deploy Vue App
+        run: pnpm -F vue-project deploy:ci

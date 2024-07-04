@@ -1,13 +1,13 @@
-import * as cdk from "aws-cdk-lib";
-import { Construct } from "constructs";
-import { ServiceEndpointDefinition } from "@apollo/gateway";
-import * as lambda from "aws-cdk-lib/aws-lambda-nodejs";
-import { Tracing, Runtime } from "aws-cdk-lib/aws-lambda";
-import * as apigateway from "aws-cdk-lib/aws-apigateway";
+import * as cdk from "aws-cdk-lib"
+import { Construct } from "constructs"
+import { ServiceEndpointDefinition } from "@apollo/gateway"
+import * as lambda from "aws-cdk-lib/aws-lambda-nodejs"
+import { Tracing, Runtime } from "aws-cdk-lib/aws-lambda"
+import * as apigateway from "aws-cdk-lib/aws-apigateway"
 
 export interface ApolloFederationGatewayProps {
-  serviceList: ServiceEndpointDefinition[];
-  apiKey: string;
+  serviceList: ServiceEndpointDefinition[]
+  apiKey: string
 }
 
 export class ApolloFederationGateway extends Construct {
@@ -16,7 +16,7 @@ export class ApolloFederationGateway extends Construct {
     id: string,
     props: ApolloFederationGatewayProps
   ) {
-    super(scope, id);
+    super(scope, id)
 
     // Federation Gateway hosted by an Apollo server running on AWS Lambda
     const apolloServer = new lambda.NodejsFunction(this, "Server", {
@@ -26,8 +26,8 @@ export class ApolloFederationGateway extends Construct {
       },
       timeout: cdk.Duration.seconds(30),
       tracing: Tracing.ACTIVE,
-      runtime: Runtime.NODEJS_20_X,
-    });
+      runtime: Runtime.NODEJS_LATEST,
+    })
 
     const grapqhQLApi = new apigateway.RestApi(this, `Api`, {
       restApiName: "Federation gateway graphql endpoint",
@@ -36,21 +36,21 @@ export class ApolloFederationGateway extends Construct {
       deployOptions: {
         tracingEnabled: true,
       },
-    });
+    })
 
     grapqhQLApi.root.addCorsPreflight({
       allowOrigins: apigateway.Cors.ALL_ORIGINS,
       allowHeaders: ["*"],
       allowMethods: apigateway.Cors.ALL_METHODS, // this is also the default,
-    });
+    })
 
     const graphqlPostIntegration = new apigateway.LambdaIntegration(
       apolloServer,
       {
         requestTemplates: { "application/json": '{ "statusCode": "200" }' },
       }
-    );
+    )
 
-    grapqhQLApi.root.addMethod("POST", graphqlPostIntegration);
+    grapqhQLApi.root.addMethod("POST", graphqlPostIntegration)
   }
 }
