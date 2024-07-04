@@ -6,11 +6,11 @@ on:
       - main
 
 jobs:
-  production:
+  Production:
     # opens the possibility of multiple environments depending on the branch
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    environment: production
+    environment: Production
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
