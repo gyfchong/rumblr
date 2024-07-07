@@ -1,4 +1,4 @@
-type Post @key(fields: "id") {
+type Post @aws_iam @key(fields: "id") {
   id: ID!
   content: String
 }
@@ -12,6 +12,7 @@ type Query {
   _service: _Service!
   post(id: ID!): Post
   member(id: ID!): Member
+  getPosts: [Post!] @aws_iam
 }
 
 type _Service {
