@@ -4,6 +4,8 @@ import * as appsync from "aws-cdk-lib/aws-appsync"
 import * as lambda from "aws-cdk-lib/aws-lambda-nodejs"
 import * as dynamodb from "aws-cdk-lib/aws-dynamodb"
 import { Tracing, Runtime } from "aws-cdk-lib/aws-lambda"
+import * as cognito from "aws-cdk-lib/aws-cognito"
+import * as iam from "aws-cdk-lib/aws-iam"
 import * as s3 from "aws-cdk-lib/aws-s3"
 
 import { join, dirname } from "path"
@@ -23,6 +25,62 @@ export class AppSyncBasedService extends Construct {
   constructor(scope: Construct, id: string, props: AppSyncBasedServiceProps) {
     super(scope, id)
 
+    const identityPool = new cognito.CfnIdentityPool(this, "IdentityPool", {
+      identityPoolName: "rumblr-identity-pool",
+      allowUnauthenticatedIdentities: true, // Allow unauthenticated access
+      cognitoIdentityProviders: [
+        {
+          clientId: "ap-southeast-2:0053bc04-f246-4b0f-9d3a-1cddce306dcb",
+          providerName: "Amazon Cognito user pool",
+        },
+      ],
+    })
+
+    const unauthenticatedPolicyDocument = new iam.PolicyDocument({
+      statements: [
+        new iam.PolicyStatement({
+          sid: "AllActions",
+          actions: ["appsync:GraphQL"],
+          resources: ["arn:aws:appsync:*:*:apis/*/types/*/fields/*"],
+        }),
+      ],
+    })
+
+    // Attach policy to new IAM role
+    const unauthenticatedRole = new iam.Role(
+      this,
+      "CognitoDefaultUnauthenticatedRole",
+      {
+        roleName: `cognito-default-unauthenticated-role`,
+        description:
+          "IAM Role to be assumed by Cognito for unauthenticated user",
+        managedPolicies: [unauthenticatedPolicyDocument.toJSON()],
+        assumedBy: new iam.FederatedPrincipal(
+          "cognito-identity.amazonaws.com",
+          {
+            StringEquals: {
+              "cognito-identity.amazonaws.com:aud": identityPool.attrId,
+            },
+            "ForAnyValue:StringLike": {
+              "cognito-identity.amazonaws.com:amr": "unauthenticated",
+            },
+          }
+        ),
+      }
+    )
+
+    // Attach role to Identity Pool
+    new cognito.CfnIdentityPoolRoleAttachment(
+      this,
+      "IdentityPoolRoleAttachment",
+      {
+        identityPoolId: identityPool.attrId,
+        roles: {
+          unauthenticated: unauthenticatedRole.roleArn,
+        },
+      }
+    )
+
     // Create GraphQL API
     const api = new appsync.GraphqlApi(this, "Api", {
       name: props.serviceName,
@@ -31,10 +89,15 @@ export class AppSyncBasedService extends Construct {
       ),
       authorizationConfig: {
         defaultAuthorization: {
-          authorizationType: appsync.AuthorizationType.API_KEY,
-          apiKeyConfig: {
-            expires: cdk.Expiration.after(cdk.Duration.days(364)),
-          },
+          authorizationType: appsync.AuthorizationType.IAM,
+          // userPoolConfig: {
+          //   userPool: {
+          //     userPoolId: "ap-southeast-2_p9S9UnFWs",
+          //     userPoolArn:
+          //       "arn:aws:cognito-idp:ap-southeast-2:867222587325:userpool/ap-southeast-2_p9S9UnFWs",
+          //     identityProviders: [],
+          //   },
+          // },
         },
       },
       xrayEnabled: true,

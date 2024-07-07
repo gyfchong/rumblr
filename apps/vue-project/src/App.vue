@@ -35,6 +35,10 @@ const { result, loading, error } = useQuery(POSTS_QUERY)
       <p v-if="error">Something went wrong...</p>
       <p v-if="loading">Loading...</p>
       <p v-if="result.post">{{ result.post.content }}</p>
+      <a
+        href="https://rumblr.auth.ap-southeast-2.amazoncognito.com/login?client_id=7e7uof23b1c9jv2u9jovi108sr&response_type=code&scope=email+openid&redirect_uri=https://d1bgzwpjsndmjc.cloudfront.net/"
+        >Login</a
+      >
     </div>
   </header>
 
